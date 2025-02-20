@@ -3,10 +3,11 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ImovelService } from './imovel-service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-form-cadastro-imovel',
-  imports: [ReactiveFormsModule, HttpClientModule],
+  imports: [ReactiveFormsModule, HttpClientModule, CommonModule],
   standalone: true,
   providers: [ImovelService],
   templateUrl: './form-cadastro-imovel.component.html',
