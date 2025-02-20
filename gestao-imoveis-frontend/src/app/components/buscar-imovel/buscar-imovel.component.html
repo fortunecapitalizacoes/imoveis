@@ -1,0 +1,61 @@
+<div class="filter-bar">
+  <div class="filter-field">
+    <label for="filterTipo">Tipo:</label>
+    <select id="filterTipo" formControlName="tipo">
+      <option value="">Todos</option>
+      <option value="CASA">Casa</option>
+      <option value="APARTAMENTO">Apartamento</option>
+      <option value="TERRENO">Terreno</option>
+    </select>
+  </div>
+
+  <div class="filter-field">
+    <label for="filterStatus">Status:</label>
+    <select id="filterStatus" formControlName="status">
+      <option value="">Todos</option>
+      <option value="DISPONIVEL">Disponível</option>
+      <option value="ALUGADO">Alugado</option>
+      <option value="VENDIDO">Vendido</option>
+    </select>
+  </div>
+
+  <div class="filter-field">
+    <label for="filterPrecoMin">Preço Min:</label>
+    <input type="number" id="filterPrecoMin" formControlName="precoMin" placeholder="R$">
+  </div>
+
+  <div class="filter-field">
+    <label for="filterPrecoMax">Preço Max:</label>
+    <input type="number" id="filterPrecoMax" formControlName="precoMax" placeholder="R$">
+  </div>
+
+  <div class="filter-field">
+    <label for="filterAreaMin">Área Min (m²):</label>
+    <input type="number" id="filterAreaMin" formControlName="areaMin" placeholder="m²">
+  </div>
+
+  <div class="filter-field">
+    <label for="filterAreaMax">Área Max (m²):</label>
+    <input type="number" id="filterAreaMax" formControlName="areaMax" placeholder="m²">
+  </div>
+
+  <button type="button">Filtrar</button>
+</div>
+
+<div class="search-results">
+  <div class="result-card" *ngFor="let imovel of listaImoveis">
+    <img [src]="getUrlImagem(imovel)" alt="Imagem do imóvel" class="result-img"/>
+    <div class="result-details">
+      <h3 class="result-title">{{ imovel.tipo }} de {{ imovel.quartos }} quartos</h3>
+      <p class="result-description">{{ imovel.endereco }}</p>
+      <p class="result-area">Área: {{ imovel.areaTotal }} m²</p>
+      <p class="result-quartos">Quartos: {{ imovel.quartos }}</p>
+      <p class="result-tipo">Tipo: {{ imovel.tipo }}</p>
+      <div class="result-actions">
+        <button class="btn-edit" (click)="editarImovel(imovel)">Editar</button>
+        <button class="btn-delete" (click)="excluirImovel(imovel)">Excluir</button>
+        <button class="btn-visualizar" (click)="enviarImovel(imovel)" [routerLink]="['/detalhes-imovel']">Visualizar</button>
+      </div>
+    </div>
+  </div>
+</div>

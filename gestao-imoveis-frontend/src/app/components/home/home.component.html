@@ -1,0 +1,57 @@
+<nav class="navbar">
+  <div class="logo">Imóveis+</div>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    
+    <li class="dropdown">
+      <a class="dropdown-toggle">Imóveis ▼</a>
+      <ul class="dropdown-menu">
+        <li><a href="/cadastro-imovel">Cadastro de imóvel</a></li>
+        <li><a href="/buscar-imovel">Pesquisa de imóvel</a></li>
+      </ul>
+    </li>
+    
+    <li><a href="#">Compra</a></li>
+    <li><a href="#">Criar Anúncio</a></li>
+  </ul>
+
+  <!-- Botão Menu para Mobile -->
+  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+</nav>
+
+<!-- Banner -->
+<div class="banner relative">
+  <!-- Container das imagens -->
+  <div 
+    class="slider w-full h-full flex transition-transform duration-500"
+    [ngStyle]="{'transform': 'translateX(-' + (currentIndex * 100) + '%)'}">
+    <img
+      *ngFor="let image of images"
+      [src]="image"
+      class="slide w-full h-full object-cover flex-none">
+  </div>
+  
+  <!-- Mensagem Publicitária -->
+  <div class="advertisement">
+    <h2>São Prémios toda a semana!</h2>
+    <p>Alugar seu imóvel aqui é concorrer toda semana a diversos premios.</p>
+    <a href="#" class="cta-button">Saiba Mais</a>
+  </div>
+  
+  <!-- Botões de Navegação -->
+  <button (click)="prevSlide()" class="nav-button left-2">
+    ❮
+  </button>
+  
+  <button (click)="nextSlide()" class="nav-button right-2">
+    ❯
+  </button>
+
+  <!-- Indicadores -->
+  <div class="indicators">
+    <button *ngFor="let image of images; let i = index"
+            (click)="goToSlide(i)"
+            [class.bg-white]="i === currentIndex"
+            class="indicator"></button>
+  </div>
+</div>

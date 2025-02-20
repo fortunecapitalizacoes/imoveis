@@ -1,0 +1,46 @@
+<div class="container">
+  <h1>Detalhes do Imóvel</h1>
+
+  <div class="detalhes-imovel">
+    <div class="info">
+      <h2>Informações do Imóvel</h2>
+      <img *ngIf="midias && midias.length > 0" [src]="midias[0].url" [alt]="midias[0].titulo || 'Imagem do imóvel'" class="imagem-arredondada">
+      <p><strong>Tipo:</strong> {{ imovel.tipo }}</p>
+      <p><strong>Status:</strong> {{ imovel.status }}</p>
+      <p><strong>Descrição:</strong> {{ imovel.descricao }}</p>
+      <p><strong>Endereço:</strong> {{ imovel.endereco }}</p>
+      <p><strong>Área Total:</strong> {{ imovel.areaTotal }}m²</p>
+      <p><strong>Área Construída:</strong> {{ imovel.areaConstruida }}m²</p>
+      <p><strong>Quartos:</strong> {{ imovel.quartos }}</p>
+      <p><strong>Banheiros:</strong> {{ imovel.banheiros }}</p>
+      <p><strong>Vagas na Garagem:</strong> {{ imovel.vagasGaragem }}</p>
+      <p><strong>Preço:</strong> R$ {{ imovel.preco }}</p>
+    </div>
+  </div>
+
+  <!-- Galeria -->
+  <div class="galeria">
+    <h2>Galeria de Imagens e Vídeos</h2>
+    <div class="imagem-video-container">
+      <img *ngFor="let midia of midias"
+           [src]="midia.url"
+           [alt]="midia.titulo || 'Mídia do imóvel'"
+           (click)="abrirModal(midia)">
+    </div>
+  </div>
+  
+  <!-- Modal -->
+  <div id="modal" class="modal" (click)="fecharModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <ng-container *ngIf="modalImage">
+        <img [src]="modalImage" alt="Imagem Ampliada">
+      </ng-container>
+      <ng-container *ngIf="modalVideo">
+        <video controls>
+          <source [src]="modalVideo" type="video/mp4">
+          Seu navegador não suporta o elemento de vídeo.
+        </video>
+      </ng-container>
+    </div>
+  </div>
+</div>

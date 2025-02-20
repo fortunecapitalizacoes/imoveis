@@ -1,0 +1,104 @@
+<div class="container">
+  <h2>Cadastro de Imóvel</h2>
+  <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()">
+    
+    <!-- Grupo 1: Tipo e Status -->
+    <div class="form-group row">
+      <div class="field col-md-6">
+        <label for="tipo">Tipo de Imóvel:</label>
+        <select formControlName="tipo" class="form-control">
+          <option value="CASA">Casa</option>
+          <option value="APARTAMENTO">Apartamento</option>
+          <option value="TERRENO">Terreno</option>
+        </select>
+      </div>
+      <div class="field col-md-6">
+        <label for="status">Status:</label>
+        <select formControlName="status" class="form-control">
+          <option value="DISPONIVEL">Disponível</option>
+          <option value="ALUGADO">Alugado</option>
+          <option value="VENDIDO">Vendido</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Grupo 2: Endereço e Preço -->
+    <div class="form-group row">
+      <div class="field col-md-6">
+        <label for="endereco">Endereço:</label>
+        <input type="text" formControlName="endereco" class="form-control" required>
+      </div>
+      <div class="field col-md-6">
+        <label for="preco">Preço (R$):</label>
+        <input type="number" formControlName="preco" class="form-control" step="0.01" required>
+      </div>
+    </div>
+
+    <!-- Grupo 3: Áreas e Quantidade de Quartos/Banheiros -->
+    <div class="form-group row">
+      <div class="field col-md-3">
+        <label for="areaTotal">Área Total (m²):</label>
+        <input type="number" formControlName="areaTotal" class="form-control" step="0.01" required>
+      </div>
+      <div class="field col-md-3">
+        <label for="areaConstruida">Área Construída (m²):</label>
+        <input type="number" formControlName="areaConstruida" class="form-control" step="0.01">
+      </div>
+      <div class="field col-md-3">
+        <label for="quartos">Quartos:</label>
+        <input type="number" formControlName="quartos" class="form-control" min="0" required>
+      </div>
+      <div class="field col-md-3">
+        <label for="banheiros">Banheiros:</label>
+        <input type="number" formControlName="banheiros" class="form-control" min="0" required>
+      </div>
+    </div>
+
+    <!-- Grupo 4: Vagas e Descrição -->
+    <div class="form-group row">
+      <div class="field col-md-6">
+        <label for="vagasGaragem">Vagas de Garagem:</label>
+        <input type="number" formControlName="vagasGaragem" class="form-control" min="0">
+      </div>
+      <div class="field col-md-6">
+        <label for="descricao">Descrição:</label>
+        <textarea formControlName="descricao" class="form-control" rows="4"></textarea>
+      </div>
+    </div>
+
+    <!-- Grupo 5: Imagens e Vídeos -->
+    <div class="form-group">
+      <div class="field">
+        <label>Imagens:</label>
+        <div class="drop-zone" (click)="triggerFileInput('imagens')">
+          Arraste e solte suas imagens aqui ou clique para selecionar
+        </div>
+        <input type="file" id="imagens" multiple accept="image/*" style="display: none;" (change)="onFilesSelected($event, 'imagens')">
+        <div class="image-thumbnails">
+          <div *ngFor="let img of selectedImages; let i = index" class="thumbnail">
+            <img [src]="img" class="thumb-preview">
+            <button type="button" class="remove-btn" (click)="removeFile(i, 'imagens')">X</button>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Vídeos:</label>
+        <div class="drop-zone" (click)="triggerFileInput('videos')">
+          Arraste e solte seus vídeos aqui ou clique para selecionar
+        </div>
+        <input type="file" id="videos" multiple accept="video/*" style="display: none;" (change)="onFilesSelected($event, 'videos')">
+        <div class="video-thumbnails">
+          <div *ngFor="let vid of selectedVideos; let i = index" class="thumbnail">
+            <video [src]="vid" class="thumb-preview" controls></video>
+            <button type="button" class="remove-btn" (click)="removeFile(i, 'videos')">X</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botão de Cadastro -->
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </div>
+  </form>
+</div>

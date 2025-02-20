@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: gestaoimoveis
+  servlet:
+    multipart:
+      enabled: true  # Habilita o suporte a multipart (normalmente já vem habilitado no Spring Boot)
+      max-file-size: 10MB  # Limite de tamanho para o arquivo
+      max-request-size: 10MB  # Limite de tamanho para a requisição

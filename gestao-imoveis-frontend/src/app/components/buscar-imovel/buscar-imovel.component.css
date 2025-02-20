@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+.filter-bar {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 15px;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 10px 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 30px auto 20px;
+  overflow-x: auto;
+  max-width: 90%;
+}
+
+.filter-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-field label {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.filter-field input,
+.filter-field select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.3s ease-in-out;
+}
+
+.filter-field input:focus,
+.filter-field select:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+}
+
+.filter-bar button {
+  padding: 8px 15px;
+  background: #FFA500;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.filter-bar button:hover {
+  background: #e59400;
+}
+
+/* Estilos para os resultados */
+.search-results {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.result-card {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 15px;
+}
+
+.result-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.result-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.result-details {
+  padding: 20px;
+  text-align: left; /* Alinhamento à esquerda */
+}
+
+.result-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.result-description {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.result-area,
+.result-quartos,
+.result-tipo {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+/* Ações */
+.result-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.result-actions button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+/* Botão de Editar - verde */
+.btn-edit {
+  background: #28a745;
+}
+
+.btn-edit:hover {
+  background: #218838;
+}
+
+/* Botão de Excluir - vermelho */
+.btn-delete {
+  background: #dc3545;
+}
+
+.btn-delete:hover {
+  background: #c82333;
+}
+
+.btn-visualizar {
+  background: #3a4be6;
+}
+
+.btn-visualizar:hover {
+  background: #218838;
+}
+
