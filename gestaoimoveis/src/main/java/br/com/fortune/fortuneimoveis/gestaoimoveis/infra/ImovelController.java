@@ -17,27 +17,28 @@ import java.util.Optional;
 @RequestMapping("/imoveis")
 public class ImovelController {
 
-	private final FileStorageService fileStorageService;
-	private final ImageService imageService;
-	private final ImovelDomain imovelService;
 
-	public ImovelController(FileStorageService fileStorageService, ImageService imageService,
-			ImovelDomain imovelService) {
-		this.fileStorageService = fileStorageService;
-		this.imageService = imageService;
-		this.imovelService = imovelService;
+	private final ImovelDomain imovelDomain;
+
+	public ImovelController(FileStorageService fileStorageService, ImovelDomain imovelDomain) {
+		this.imovelDomain = imovelDomain ;
 	}
 
 	@GetMapping("imagem/{id}")
 	public ResponseEntity<?> getImage(@PathVariable("id") String id) {
-		return imageService.getImage(id);
+		return imovelDomain.getImage(id);
+	}
+	
+	@DeleteMapping("imagem/delete/{id}")
+	public ResponseEntity<?> deleteImage(@PathVariable("id") String id) {
+		imovelDomain.deleteFile(id);
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(HttpStatus.ACCEPTED);
 	}
 
 	@PostMapping("imagem/upload")
-
 	public ResponseEntity<?> uploadFile(@RequestParam("file") List<MultipartFile> files) {
 		try {
-			List<String> fileIds = fileStorageService.uploadFiles(files);
+			List<String> fileIds = imovelDomain.uploadFiles(files);
 			return ResponseEntity.ok(fileIds);
 		} catch (IOException e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao salvar o arquivo.");
@@ -46,24 +47,24 @@ public class ImovelController {
 
 	@PostMapping
 	public ResponseEntity<Imovel> salvarImovel(@RequestBody Imovel imovel) {
-		Imovel novoImovel = imovelService.salvarImovel(imovel);
+		Imovel novoImovel = imovelDomain.salvarImovel(imovel);
 		return ResponseEntity.ok(novoImovel);
 	}
 
 	@GetMapping
 	public ResponseEntity<List<Imovel>> listarImoveis() {
-		return ResponseEntity.ok(imovelService.listarImoveis());
+		return ResponseEntity.ok(imovelDomain.listarImoveis());
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Imovel> buscarPorId(@PathVariable("id") String id) {
-		Optional<Imovel> imovel = imovelService.buscarPorId(id);
+		Optional<Imovel> imovel = imovelDomain.buscarPorId(id);
 		return imovel.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
 	}
 
 	@DeleteMapping("deletar/{id}")
 	public ResponseEntity<Void> deletarImovel(@PathVariable("id") String id) {
-	    imovelService.deletarImovel(id);
+		imovelDomain.deletarImovel(id);
 	    return ResponseEntity.noContent().build();
 	}
 }

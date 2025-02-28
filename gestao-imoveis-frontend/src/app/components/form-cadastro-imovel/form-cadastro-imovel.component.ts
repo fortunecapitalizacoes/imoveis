@@ -1,5 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormArray } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ImovelService } from './imovel-service';
@@ -17,7 +17,11 @@ export class FormCadastroImovelComponent implements AfterViewInit {
   cadastroForm: FormGroup;
   imagePreviews: string[] = [];
   videoPreviews: string[] = [];
-  
+  selectedImages: string[] = [];
+  selectedVideos: string[] = [];
+  fileListImagem: any;
+  fileListVideo: any;
+
   constructor(private fb: FormBuilder, private imovelService: ImovelService) {
     this.cadastroForm = this.fb.group({
       tipo: ['', Validators.required],
@@ -30,15 +34,11 @@ export class FormCadastroImovelComponent implements AfterViewInit {
       banheiros: [null, [Validators.required, Validators.min(0)]],
       vagasGaragem: [null, [Validators.min(0)]],
       descricao: [''],
-      imagens: [[]],
+      imagens: this.fb.array([[]]),
       videos: [[]]
     });
   }
 
-  /**
-   * Configura a zona de drop para um input de arquivos e adiciona eventos de click, dragover, dragleave e drop.
-   * Ao selecionar ou soltar arquivos, chama a pré-visualização e o upload dos mesmos.
-   */
   private setupDropZone(dropZoneId: string, inputId: string) {
     const dropZone = document.getElementById(dropZoneId);
     const fileInput = document.getElementById(inputId) as HTMLInputElement;
@@ -50,9 +50,6 @@ export class FormCadastroImovelComponent implements AfterViewInit {
     }
   }
 
-  /**
-   * Adiciona eventos à zona de drop
-   */
   private addDropZoneEventListeners(dropZone: HTMLElement, fileInput: HTMLInputElement, inputId: string) {
     dropZone.addEventListener('click', () => fileInput.click());
 
@@ -81,17 +78,11 @@ export class FormCadastroImovelComponent implements AfterViewInit {
     });
   }
 
-  /**
-   * Trata os arquivos selecionados e os envia para upload
-   */
   private handleFiles(inputId: string, files: FileList) {
     this.showPreview(inputId, files);
     this.uploadFiles(inputId, files);
   }
 
-  /**
-   * Processa o drop dos arquivos e os atribui ao input de arquivos
-   */
   private handleDropFiles(fileInput: HTMLInputElement, files: FileList) {
     const dataTransfer = new DataTransfer();
     Array.from(files).forEach(file => dataTransfer.items.add(file));
@@ -100,16 +91,13 @@ export class FormCadastroImovelComponent implements AfterViewInit {
     this.handleFiles(fileInput.id, fileInput.files);
   }
 
-  /**
-   * Exibe uma pré-visualização dos arquivos selecionados.
-   */
   private showPreview(inputId: string, files: FileList) {
     const previewContainerId = inputId === 'imagens' ? 'previewImagens' : 'previewVideos';
     const previewContainer = document.getElementById(previewContainerId);
-  
+
     if (previewContainer) {
-      previewContainer.innerHTML = ''; // Limpa pré-visualizações anteriores
-  
+      previewContainer.innerHTML = '';
+
       Array.from(files).forEach(file => {
         const reader = new FileReader();
         reader.onload = (e: ProgressEvent<FileReader>) => {
@@ -117,10 +105,10 @@ export class FormCadastroImovelComponent implements AfterViewInit {
           if (inputId === 'imagens') {
             element = document.createElement('img');
             element.src = e.target?.result as string;
-            element.style.width = '100px'; // Ajuste o tamanho conforme necessário
-            element.style.height = '100px'; // Ajuste o tamanho conforme necessário
+            element.style.width = '100px';
+            element.style.height = '100px';
             element.style.margin = '5px';
-            element.style.objectFit = 'cover'; // Para garantir que as imagens mantenham o aspecto proporcional
+            element.style.objectFit = 'cover';
           } else if (inputId === 'videos') {
             element = document.createElement('video');
             element.src = e.target?.result as string;
@@ -138,36 +126,7 @@ export class FormCadastroImovelComponent implements AfterViewInit {
       console.warn(`Container de pré-visualização (${previewContainerId}) não encontrado!`);
     }
   }
-  
-  /**
-   * Cria e adiciona o elemento de pré-visualização (imagem ou vídeo)
-   */
-  private createPreviewElement(inputId: string, result: string) {
-    const previewContainer = document.getElementById(inputId === 'imagens' ? 'previewImagens' : 'previewVideos');
-    let element;
 
-    if (inputId === 'imagens') {
-      element = document.createElement('img');
-      element.src = result;
-      element.style.width = '100px';
-      element.style.height = '100px';
-    } else if (inputId === 'videos') {
-      element = document.createElement('video');
-      element.src = result;
-      element.controls = true;
-      element.style.width = '150px';
-      element.style.height = '100px';
-    }
-
-    if (element) {
-      element.style.margin = '5px';
-      previewContainer?.appendChild(element);
-    }
-  }
-
-  /**
-   * Faz o upload dos arquivos conforme o tipo (imagens ou vídeos).
-   */
   private uploadFiles(inputId: string, files: FileList) {
     if (inputId === 'imagens') {
       this.uploadImagens(files).subscribe((urls) => {
@@ -180,24 +139,29 @@ export class FormCadastroImovelComponent implements AfterViewInit {
     }
   }
 
-  // Método de upload para imagens (retorna um Observable com URLs)
   private uploadImagens(files: FileList): Observable<string[]> {
     return this.imovelService.uploadImagens(files);
   }
 
-  // Método de upload para vídeos (corrigido para chamar o serviço adequado)
   private uploadVideos(files: FileList): Observable<string[]> {
-    return this.imovelService.uploadImagens(files); // Corrigido o serviço de upload de vídeos
+    return this.imovelService.uploadImagens(files);
   }
 
   ngAfterViewInit() {
-    // Configura as zonas de drop para imagens e vídeos
     this.setupDropZone('dropZoneImages', 'imagens');
     this.setupDropZone('dropZoneVideos', 'videos');
   }
 
   onSubmit() {
     if (this.cadastroForm.valid) {
+
+
+     
+        this.uploadFiles("imagens",this.fileListImagem)
+     //   this.uploadFiles("videos",this.fileListVideo)
+
+        console.log()
+    
       this.imovelService.salvarImovel(this.cadastroForm.value).subscribe(
         (res) => {
           console.log('Imóvel cadastrado:', res);
@@ -213,43 +177,53 @@ export class FormCadastroImovelComponent implements AfterViewInit {
     }
   }
 
-  selectedImages: string[] = [];
-selectedVideos: string[] = [];
-
-triggerFileInput(type: string): void {
-  const inputElement = document.getElementById(type) as HTMLInputElement;
-  inputElement?.click();
-}
-
-onFilesSelected(event: any, type: string): void {
-  const files: FileList = event.target.files;
-  if (!files || files.length === 0) return;
-
-  // Converte FileList para um array de File corretamente
-  Array.from(files).forEach((file: File) => {
-    const reader = new FileReader();
-    reader.onload = (e: ProgressEvent<FileReader>) => {
-      const result = e.target?.result;
-      if (result) {
-        if (type === 'imagens') {
-          this.selectedImages.push(result as string);
-        } else if (type === 'videos') {
-          this.selectedVideos.push(result as string);
-        }
-      }
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
-
-
-removeFile(index: number, type: string): void {
-  if (type === 'imagens') {
-    this.selectedImages.splice(index, 1);
-  } else if (type === 'videos') {
-    this.selectedVideos.splice(index, 1);
+  triggerFileInput(type: string): void {
+    const inputElement = document.getElementById(type) as HTMLInputElement;
+    inputElement?.click();
   }
-}
 
+  onFilesSelected(event: any, type: string): void {
+    const files: FileList = event.target.files;
+    
+    if (!files || files.length === 0) return;
+ //   this.uploadFiles(type, files);
+
+    Array.from(files).forEach((file: File) => {
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        const result = e.target?.result;
+        if (result != null) {
+          if (type === 'imagens') {
+            this.selectedImages.push(result as string);
+            this.fileListImagem = event.target.files;
+          } else if (type === 'videos') {
+            this.selectedVideos.push(result as string);
+            this.fileListVideo = event.target.files;
+          }
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+
+    console.log(this.selectedImages);
+  }
+
+  removeFile(index: number, type: string): void {
+    if (type === 'imagens') {
+      this.selectedImages.splice(index, 1);
+      console.log("this.selectedImages  ", this.selectedImages );
+  
+      // Garantir que fileListImagem seja um array e então usar splice
+      if (!Array.isArray(this.fileListImagem)) {
+        this.fileListImagem = Array.from(this.fileListImagem); // Convertendo para array se necessário
+      }
+      
+      this.fileListImagem.splice(index, 1);
+      console.log("this.fileListImagem  ", this.fileListImagem);
+    } else if (type === 'videos') {
+      this.selectedVideos.splice(index, 1);
+    }
+  }
+  
+  
 }

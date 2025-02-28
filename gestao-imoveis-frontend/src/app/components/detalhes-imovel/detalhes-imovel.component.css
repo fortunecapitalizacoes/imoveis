@@ -133,8 +133,9 @@ h1 {
 /* Imagem arredondada */
 .imagem-arredondada {
   width: 100%;
-  max-width: 100%;
+  max-width: 400px; /* Define um tamanho máximo padrão */
   height: auto;
   border-radius: 15px;
   transition: transform 0.5s ease;
+  object-fit: cover; /* Garante que a imagem se ajuste ao contêiner sem distorção */
 }

@@ -37,6 +37,13 @@ export class ImovelService {
     return this.http.post<string[]>(`${this.API_URL}/imagem/upload`, formData);
   }
 
+  
+
+  
+  deleteFile(id: string): Observable<Blob> {
+    return this.http.delete(`${this.API_URL}/imagem/delete/${id}`, { responseType: 'blob' });
+  }
+
   getImagem(id: string): Observable<Blob> {
     return this.http.get(`${this.API_URL}/imagem/${id}`, { responseType: 'blob' });
   }

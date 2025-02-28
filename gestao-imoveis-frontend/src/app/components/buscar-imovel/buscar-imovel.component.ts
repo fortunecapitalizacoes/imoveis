@@ -29,6 +29,7 @@ export class BuscarImovelComponent implements OnInit {
   }
 
   getUrlImagem(imovel: Imovel): string {
+    debugger
     return imovel.imagens?.[0] 
       ? `http://localhost:8080/imoveis/imagem/${imovel.imagens[0]}`
       : 'assets/images/default-imovel.jpg';
