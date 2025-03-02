@@ -4,10 +4,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ImovelService } from './imovel-service';
 import { CommonModule } from '@angular/common';
+import { DragDropModule, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-form-cadastro-imovel',
-  imports: [ReactiveFormsModule, HttpClientModule, CommonModule],
+  imports: [ReactiveFormsModule, HttpClientModule, CommonModule, DragDropModule],
   standalone: true,
   providers: [ImovelService],
   templateUrl: './form-cadastro-imovel.component.html',
@@ -15,12 +16,10 @@ import { CommonModule } from '@angular/common';
 })
 export class FormCadastroImovelComponent implements AfterViewInit {
   cadastroForm: FormGroup;
-  imagePreviews: string[] = [];
-  videoPreviews: string[] = [];
   selectedImages: string[] = [];
   selectedVideos: string[] = [];
-  fileListImagem: any;
-  fileListVideo: any;
+  fileListImagem: FileList | File[] = [];
+  fileListVideo: FileList | File[] = [];
 
   constructor(private fb: FormBuilder, private imovelService: ImovelService) {
     this.cadastroForm = this.fb.group({
@@ -34,9 +33,14 @@ export class FormCadastroImovelComponent implements AfterViewInit {
       banheiros: [null, [Validators.required, Validators.min(0)]],
       vagasGaragem: [null, [Validators.min(0)]],
       descricao: [''],
-      imagens: this.fb.array([[]]),
+      imagens: this.fb.array([]),
       videos: [[]]
     });
+  }
+
+  ngAfterViewInit() {
+    this.setupDropZone('dropZoneImages', 'imagens');
+    this.setupDropZone('dropZoneVideos', 'videos');
   }
 
   private setupDropZone(dropZoneId: string, inputId: string) {
@@ -46,7 +50,7 @@ export class FormCadastroImovelComponent implements AfterViewInit {
     if (dropZone && fileInput) {
       this.addDropZoneEventListeners(dropZone, fileInput, inputId);
     } else {
-      console.warn(`DropZone (${dropZoneId}) ou Input (${inputId}) não encontrado!`);
+      console.warn(`DropZone (<span class="math-inline">\{dropZoneId\}\) ou Input \(</span>{inputId}) não encontrado!`);
     }
   }
 
@@ -130,13 +134,31 @@ export class FormCadastroImovelComponent implements AfterViewInit {
   private uploadFiles(inputId: string, files: FileList) {
     if (inputId === 'imagens') {
       this.uploadImagens(files).subscribe((urls) => {
-        this.cadastroForm.controls['imagens'].setValue(urls);
+        this.adicionarImagens(urls);
+
+        this.imovelService.salvarImovel(this.cadastroForm.value).subscribe(
+          (res) => {
+            console.log('Imóvel cadastrado:', res);
+            alert('Cadastro realizado com sucesso!');
+          },
+          (err) => {
+            console.error('Erro ao cadastrar:', err);
+            alert('Erro ao cadastrar imóvel.');
+          }
+        );
       });
     } else if (inputId === 'videos') {
       this.uploadVideos(files).subscribe((urls) => {
         this.cadastroForm.controls['videos'].setValue(urls);
       });
     }
+  }
+
+  adicionarImagens(listaDeImagens: string[]): void {
+    const imagensArray = this.cadastroForm.get('imagens') as FormArray;
+    listaDeImagens.forEach(imagem => {
+      imagensArray.push(this.fb.control(imagem));
+    });
   }
 
   private uploadImagens(files: FileList): Observable<string[]> {
@@ -147,31 +169,10 @@ export class FormCadastroImovelComponent implements AfterViewInit {
     return this.imovelService.uploadImagens(files);
   }
 
-  ngAfterViewInit() {
-    this.setupDropZone('dropZoneImages', 'imagens');
-    this.setupDropZone('dropZoneVideos', 'videos');
-  }
-
   onSubmit() {
     if (this.cadastroForm.valid) {
-
-
-     
-        this.uploadFiles("imagens",this.fileListImagem)
-     //   this.uploadFiles("videos",this.fileListVideo)
-
-        console.log()
-    
-      this.imovelService.salvarImovel(this.cadastroForm.value).subscribe(
-        (res) => {
-          console.log('Imóvel cadastrado:', res);
-          alert('Cadastro realizado com sucesso!');
-        },
-        (err) => {
-          console.error('Erro ao cadastrar:', err);
-          alert('Erro ao cadastrar imóvel.');
-        }
-      );
+      this.uploadFiles("imagens", this.fileListImagem as FileList);
+      this.uploadFiles("videos", this.fileListVideo as FileList);
     } else {
       alert('Preencha todos os campos obrigatórios corretamente.');
     }
@@ -184,9 +185,8 @@ export class FormCadastroImovelComponent implements AfterViewInit {
 
   onFilesSelected(event: any, type: string): void {
     const files: FileList = event.target.files;
-    
+
     if (!files || files.length === 0) return;
- //   this.uploadFiles(type, files);
 
     Array.from(files).forEach((file: File) => {
       const reader = new FileReader();
@@ -204,8 +204,6 @@ export class FormCadastroImovelComponent implements AfterViewInit {
       };
       reader.readAsDataURL(file);
     });
-
-    console.log(this.selectedImages);
   }
 
   removeFile(index: number, type: string): void {

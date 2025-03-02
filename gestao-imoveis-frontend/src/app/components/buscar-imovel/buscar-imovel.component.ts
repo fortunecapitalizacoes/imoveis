@@ -29,10 +29,16 @@ export class BuscarImovelComponent implements OnInit {
   }
 
   getUrlImagem(imovel: Imovel): string {
-    debugger
-    return imovel.imagens?.[0] 
-      ? `http://localhost:8080/imoveis/imagem/${imovel.imagens[0]}`
-      : 'assets/images/default-imovel.jpg';
+    if (imovel.imagens) {
+      // Remove os itens null da lista
+      const imagensFiltradas = imovel.imagens.filter(imagem => imagem !== null);
+  
+      // Verifica se a lista filtrada não está vazia
+      if (imagensFiltradas.length > 0) {
+        return `http://localhost:8080/imoveis/imagem/${imagensFiltradas[0]}`;
+      }
+    }
+    return 'assets/images/default-imovel.jpg';
   }
 
   urlGenerantor(id: string): string {
