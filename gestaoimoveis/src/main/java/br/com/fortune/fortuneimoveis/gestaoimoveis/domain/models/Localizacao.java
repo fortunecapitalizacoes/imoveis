@@ -1,4 +1,4 @@
-package br.com.fortune.fortuneimoveis.gestaoimoveis.models;
+package br.com.fortune.fortuneimoveis.gestaoimoveis.domain.models;
 
 import lombok.*;
 

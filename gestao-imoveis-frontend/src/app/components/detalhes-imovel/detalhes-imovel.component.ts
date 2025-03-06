@@ -12,11 +12,10 @@ interface Midia {
 }
 
 @Component({
-  selector: 'app-detalhes-imovel',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './detalhes-imovel.component.html',
-  styleUrls: ['./detalhes-imovel.component.css']
+    selector: 'app-detalhes-imovel',
+    imports: [CommonModule],
+    templateUrl: './detalhes-imovel.component.html',
+    styleUrls: ['./detalhes-imovel.component.css']
 })
 export class DetalhesImovelComponent implements OnInit{
 
@@ -30,12 +29,21 @@ export class DetalhesImovelComponent implements OnInit{
   constructor(private imovelObservableService: ImovelObservableService) {}
 
   ngOnInit() {
+
+    this.removeNulls(this.imovel)
+
     this.subscription = this.imovelObservableService.imovel$
       .pipe(filter(imovel => imovel !== null))
       .subscribe(imovel => {
         this.imovel = imovel;
         this.combinarMidias();
       });
+  }
+
+  removeNulls(imovel: Imovel): void {
+    if (imovel && imovel.imagens) {
+      imovel.imagens = imovel.imagens.filter(i => i !== null);
+    }
   }
 
   ngOnDestroy() {
@@ -45,26 +53,27 @@ export class DetalhesImovelComponent implements OnInit{
   private combinarMidias() {
     // Inicializa a lista de mídias vazia
     this.midias = [];
-
+  
     // Se houver imagens, adiciona-as como tipo "image"
     if (this.imovel.imagens && this.imovel.imagens.length > 0) {
-      const imagens: Midia[] = this.imovel.imagens.map(url => ({
-        url,
-        type: 'image'
-      }));
+      const imagens: Midia[] = this.imovel.imagens
+        .filter(url => url && url.trim() !== null) // Filtra valores null, undefined ou strings vazias
+        .map(url => ({ url, type: 'image' }));
+  
       this.midias.push(...imagens);
     }
-
+  
     // Se houver vídeos, adiciona-os como tipo "video"
     if (this.imovel.videos && this.imovel.videos.length > 0) {
-      const videos: Midia[] = this.imovel.videos.map(url => ({
-        url,
-        type: 'video'
-      }));
+      const videos: Midia[] = this.imovel.videos
+        .filter(url => url && url.trim() !== null) // Filtra valores null, undefined ou strings vazias
+        .map(url => ({ url, type: 'video' }));
+  
       this.midias.push(...videos);
     }
   }
-
+  
+  
   abrirModal(midia: Midia) {
     console.log("Abrindo mídia:", midia.url);
     

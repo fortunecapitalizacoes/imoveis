@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import br.com.fortune.fortuneimoveis.gestaoimoveis.infra.ImageService;
 import br.com.fortune.fortuneimoveis.gestaoimoveis.infra.db.FileStorageService;
 import br.com.fortune.fortuneimoveis.gestaoimoveis.infra.db.ImovelRepository;
-import br.com.fortune.fortuneimoveis.gestaoimoveis.models.Imovel;
+import br.com.fortune.fortuneimoveis.gestaoimoveis.domain.models.Imovel;
 
 @Service
 public class ImovelDomain {

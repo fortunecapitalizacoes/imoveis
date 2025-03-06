@@ -9,12 +9,11 @@ import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 
 @Component({
-  selector: 'app-buscar-imovel',
-  standalone: true,
-  imports: [CommonModule, RouterModule, HttpClientModule],
-  providers: [ImovelService],
-  templateUrl: './buscar-imovel.component.html',
-  styleUrls: ['./buscar-imovel.component.css']
+    selector: 'app-buscar-imovel',
+    imports: [CommonModule, RouterModule, HttpClientModule],
+    providers: [ImovelService],
+    templateUrl: './buscar-imovel.component.html',
+    styleUrls: ['./buscar-imovel.component.css']
 })
 export class BuscarImovelComponent implements OnInit {
   listaImoveis: Imovel[] = [];
@@ -71,22 +70,34 @@ export class BuscarImovelComponent implements OnInit {
   }
 
   carregarImoveis(): void {
-    this.imovelService.listarImoveis().pipe(
-      tap((imoveis: Imovel[]) => {
+    this.imovelService.listarImoveis().subscribe(
+      (imoveis) => {
         this.listaImoveis = imoveis;
-        console.log('Lista de imóveis carregada:', this.listaImoveis);
-      }),
-      catchError(error => {
-        console.error('Erro ao carregar imóveis:', error);
-        return of([]);
-      })
-    ).subscribe();
+          console.log('Lista de imóveis carregada:', this.listaImoveis);
+      },
+      (err) => {
+        console.error('Erro ao cadastrar:', err);
+        alert('Erro ao cadastrar imóvel.');
+      }
+    );
+    
+    
+   
   }
 
   enviarImovel(imovel: Imovel): void {
     const imagensList = imovel.imagens?.map(element => this.urlGenerantor(element)) || [];
     imovel.imagens = [...imagensList]; // Usando spread para substituir as imagens
-  
+    this.removeNulls(imovel)
+    debugger
     this.imovelObservableService.setImovel(imovel);
+    console.log(imovel)
   }
+
+  removeNulls(imovel: Imovel): void {
+    if (imovel && imovel.imagens) {
+      imovel.imagens = imovel.imagens.filter(i => i != null && !i.includes('null'));
+    }
+  }
+  
 }

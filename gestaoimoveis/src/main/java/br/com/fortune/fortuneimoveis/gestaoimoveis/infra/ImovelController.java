@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import br.com.fortune.fortuneimoveis.gestaoimoveis.domain.ImovelDomain;
 import br.com.fortune.fortuneimoveis.gestaoimoveis.infra.db.FileStorageService;
-import br.com.fortune.fortuneimoveis.gestaoimoveis.models.Imovel;
+import br.com.fortune.fortuneimoveis.gestaoimoveis.domain.models.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -52,7 +52,7 @@ public class ImovelController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<Imovel>> listarImoveis() {
+	public ResponseEntity<?> listarImoveis() {
 		return ResponseEntity.ok(imovelDomain.listarImoveis());
 	}
 

@@ -1,4 +1,4 @@
-package br.com.fortune.fortuneimoveis.gestaoimoveis.infra;
+package br.com.fortunecap.pessoas.infra;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Paths;
