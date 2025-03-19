@@ -45,8 +45,10 @@ export class FormCadastroPessoaComponent {
   }
 
   onSubmit() {
-    if (this.cadastroForm.valid) {
+    if (true) {
       console.log(this.cadastroForm.value);
+
+
       this.pessoaService.salvarPessoa(this.cadastroForm.value).subscribe(
         (res) => {
           console.log('Imóvel cadastrado:', res);

@@ -15,7 +15,7 @@ public class PessoaController {
 
     private final DomainService domainService;
 
-    @PostMapping
+    @PostMapping("/salvar")
     public ResponseEntity<Pessoa> criarPessoa(@RequestBody Pessoa pessoa) {
         return ResponseEntity.ok(domainService.salvarPessoa(pessoa));
     }

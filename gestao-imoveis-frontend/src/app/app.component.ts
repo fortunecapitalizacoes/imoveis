@@ -12,7 +12,7 @@ import { FormCadastroPessoaComponent } from './components/form-cadastro-pessoa/f
     selector: 'app-root',
     standalone: true,  // Marca o componente como standalone
 
-    imports: [RouterOutlet, HomeComponent, FormCadastroImovelComponent, FormCadastroPessoaComponent, BuscarImovelComponent],
+    imports: [RouterOutlet, HomeComponent],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
 })

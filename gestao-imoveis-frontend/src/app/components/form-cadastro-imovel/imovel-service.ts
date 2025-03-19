@@ -9,7 +9,7 @@ import { Imovel } from '../ImovelModel';
   providedIn: 'root',
 })
 export class ImovelService {
-  private readonly API_URL = 'api/imoveis';
+  private readonly API_URL = 'cadastro/imovel/imoveis';
 
   constructor(private http: HttpClient) {}
 

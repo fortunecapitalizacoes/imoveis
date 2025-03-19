@@ -1,0 +1,61 @@
+<div class="container">
+    <h2>Lista de Pessoas</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Data de Nascimento</th>
+          <th>Endereço</th>
+          <th>Documento de Identificação</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pessoa of listaPessoas">
+          <td>{{ pessoa.nome }}</td>
+          <td>{{ pessoa.dataNascimento }}</td>
+          <td>{{ pessoa.endereco.logradouro }}, {{ pessoa.endereco.numero }} - {{ pessoa.endereco.cidade }}</td>
+          <td>{{ pessoa.documentoDeIdentificacao.tipo }} - {{ pessoa.documentoDeIdentificacao.numero }}</td>
+          <td>
+            <button (click)="abrirModal(pessoa)">Detalhes</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Modal -->
+  <div *ngIf="pessoaSelecionada" class="modal-overlay" (click)="fecharModal()">
+    <div *ngIf="pessoaSelecionada" class="modal">
+        <div class="modal-content">
+        <span class="close" (click)="fecharModal()">&times;</span>
+        <h3>Detalhes da Pessoa</h3>
+        <p><strong>Nome:</strong> {{ pessoaSelecionada.nome }}</p>
+        <p><strong>Data de Nascimento:</strong> {{ pessoaSelecionada.dataNascimento }}</p>
+        
+        <h4>📄 Documento de Identificação</h4>
+        <p><strong>Tipo:</strong> {{ pessoaSelecionada.documentoDeIdentificacao.tipo }}</p>
+        <p><strong>Número:</strong> {{ pessoaSelecionada.documentoDeIdentificacao.numero }}</p>
+        <p><strong>Data de Emissão:</strong> {{ pessoaSelecionada.documentoDeIdentificacao.dataEmissao }}</p>
+        <p><strong>Órgão Emissor:</strong> {{ pessoaSelecionada.documentoDeIdentificacao.orgaoEmissor }}</p>
+        <p><strong>Estado Emissor:</strong> {{ pessoaSelecionada.documentoDeIdentificacao.estadoEmissor }}</p>
+        <p><strong>Data de Validade:</strong> {{ pessoaSelecionada.documentoDeIdentificacao.dataValidade }}</p>
+
+        <h4>📄 Filiação</h4>
+        <p><strong>Nome do Pai:</strong> {{ pessoaSelecionada.pai }}</p>
+        <p><strong>Nome da Mãe:</strong> {{ pessoaSelecionada.mae }}</p>
+        
+        <h4>📍 Endereço</h4>
+        <p><strong>Rua:</strong> {{ pessoaSelecionada.endereco.logradouro }}, {{ pessoaSelecionada.endereco.numero }}</p>
+        <p><strong>Bairro:</strong> {{ pessoaSelecionada.endereco.bairro }}</p>
+        <p><strong>Cidade:</strong> {{ pessoaSelecionada.endereco.cidade }} - {{ pessoaSelecionada.endereco.estado }}</p>
+        <p><strong>CEP:</strong> {{ pessoaSelecionada.endereco.cep }}</p>
+        <p><strong>País:</strong> {{ pessoaSelecionada.endereco.pais }}</p>
+    
+        <h4>👨‍🎓 Profissão e Escolaridade</h4>
+        <p><strong>Profissão:</strong> {{ pessoaSelecionada.profissao }}</p>
+        <p><strong>Escolaridade:</strong> {{ pessoaSelecionada.escolaridade }}</p>
+        </div>
+    </div>
+</div>
+  
