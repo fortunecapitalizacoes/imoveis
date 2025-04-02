@@ -23,8 +23,7 @@ public class SwaggerConfig {
 						.title("Gestão de Imóveis API")
 						.version("v1")
 						.description("API para gerenciamento de imóveis"))
-				.path("/contrato/upload", createUploadPathItem())
-				.path("/contrato/cadastrar-modelo-contrato", createUploadPathItem());
+				.path("/contrato/upload", createUploadPathItem());
 	}
 
 	private Operation createUploadOperation() {

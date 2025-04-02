@@ -20,18 +20,18 @@ public class ContratoRest {
 
     private final ContratoDomain contratoService;
 
-    @PostMapping("/cadastrar-modelo-contrato")
-    public ResponseEntity<String> processarContrato(@RequestParam("file") MultipartFile file) throws IOException {
-        // Passa o arquivo para a classe de serviço
-		
-		return ResponseEntity.ok(contratoService.cadastrarContrato(file));
+    @PostMapping("/processarContrato")
+    public ResponseEntity<String> processarContrato(@RequestParam("file") MultipartFile file) throws IOException {		
+		return ResponseEntity.ok(contratoService.processrContrato(file));
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file,
+                                        @RequestParam("fileName") String fileName,
+                                        @RequestParam("filetipo") String filetipo) {
         try {
-            var fileId = contratoService.incluirModeloContrato(file);
-            return ResponseEntity.ok(fileId);
+            var contratoDto = contratoService.incluirModeloContrato(file, fileName, filetipo);
+            return ResponseEntity.ok(contratoDto);
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao salvar o arquivo.");
         }
