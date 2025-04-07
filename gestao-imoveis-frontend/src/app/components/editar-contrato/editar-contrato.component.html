@@ -1,0 +1,32 @@
+<div class="container">
+    <form [formGroup]="contratoForm" class="contrato-form">
+      <label for="fileInput" class="file-label">Selecionar arquivo DOCX:</label>
+      <input 
+        id="fileInput" 
+        type="file" 
+        (change)="onFileChange($event)" 
+        accept=".docx" 
+        class="file-input"
+      />
+  
+      <div class="editor-container">
+        <quill-editor 
+          formControlName="editor" 
+          [modules]="emptyModules"
+          [readOnly]="false"
+          class="custom-editor">
+        </quill-editor>
+      </div>
+  
+      <button 
+        type="button" 
+        (click)="exportDocx()" 
+        aria-label="Salvar como DOCX" 
+        class="save-button">
+        <i class="fas fa-download"></i> Salvar como DOCX
+      </button>
+    </form>
+  </div>
+  
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  

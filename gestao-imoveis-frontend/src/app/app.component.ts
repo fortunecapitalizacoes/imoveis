@@ -7,6 +7,7 @@ import { BuscarImovelComponent } from './components/buscar-imovel/buscar-imovel.
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormCadastroPessoaComponent } from './components/form-cadastro-pessoa/form-cadastro-pessoa.component';
+import { EditarContratoComponent } from './components/editar-contrato/editar-contrato.component';
 
 @Component({
     selector: 'app-root',
