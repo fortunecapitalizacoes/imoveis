@@ -1,0 +1,96 @@
+CONTRATO DE LOCAÇÃO RESIDENCIAL
+Pelo presente instrumento particular, as partes:
+
+LOCADOR: [nomeLocador], [nacionalidadeLocador], [estadoCivilLocador], [profissaoLocador], portador do RG nº [rgLocador] e do CPF nº [cpfLocador], residente e domiciliado à [enderecoLocador], com dados bancários: [dadosBancariosLocador];
+
+LOCATÁRIO: [nomeLocatario], [nacionalidadeLocatario], [estadoCivilLocatario], [profissaoLocatario], portador do RG nº [rgLocatario] e do CPF nº [cpfLocatario], residente e domiciliado à [enderecoLocatario];
+
+Têm entre si, justas e contratadas, a locação do imóvel abaixo descrito, que se regerá pelas cláusulas e condições seguintes:
+
+CLÁUSULA 1 - DO IMÓVEL
+O LOCADOR dá em locação ao LOCATÁRIO o imóvel de uso estritamente residencial, situado à [enderecoImovel], com as seguintes características: [caracteristicasImovel].
+
+CLÁUSULA 2 - DO PRAZO
+O prazo da locação é de [numeroMesesOuAnos] meses, iniciando-se em [dataInicio] e terminando em [dataTermino], independentemente de notificação ou aviso.
+
+CLÁUSULA 3 - DO VALOR DO ALUGUEL
+O aluguel mensal será de R$ [valor] ([valorPorExtenso]), vencendo todo dia [diaDoMes] de cada mês, a ser pago através de [metodoPagamento].
+
+CLÁUSULA 4 - DOS ENCARGOS MORATÓRIOS
+Em caso de atraso no pagamento do aluguel ou encargos, incidirá multa de [percentualMultaJuros]% sobre o valor devido, além de juros legais.
+
+CLÁUSULA 5 - DO REAJUSTE
+O aluguel será reajustado anualmente com base no índice [indiceCorrecao], ou outro que venha a substituí-lo.
+
+CLÁUSULA 6 - DA GARANTIA
+A locação é garantida por [tipoGarantia], no valor de R$ [valorGarantia], depositado em [dataDeposito].
+
+CLÁUSULA 7 - DA RESCISÃO ANTECIPADA
+Em caso de rescisão antecipada sem justa causa, a parte infratora deverá pagar multa proporcional ao tempo restante do contrato, correspondente a [mesesMultaRescisao] meses de aluguel.
+
+CLÁUSULA 8 - DO FORO
+Fica eleito o foro da cidade de [cidadeForo], para dirimir quaisquer dúvidas oriundas deste contrato, renunciando as partes a qualquer outro, por mais privilegiado que seja.
+
+E por estarem justos e contratados, firmam o presente contrato em [numeroViasContrato] vias de igual teor e forma, na presença de testemunhas.
+
+[ cidadeForo ], [dataAssinatura].
+
+LOCADOR: ___________________________
+[nomeLocador]
+
+LOCATÁRIO: _________________________
+[nomeLocatario]
+
+Testemunhas:
+
+Nome: _______________________ | Assinatura: _______________________
+
+Nome: _______________________ | Assinatura: _______________________
+CONTRATO DE LOCAÇÃO RESIDENCIAL
+Pelo presente instrumento particular, as partes:
+
+LOCADOR: [nomeLocador], [nacionalidadeLocador], [estadoCivilLocador], [profissaoLocador], portador do RG nº [rgLocador] e do CPF nº [cpfLocador], residente e domiciliado à [enderecoLocador], com dados bancários: [dadosBancariosLocador];
+
+LOCATÁRIO: [nomeLocatario], [nacionalidadeLocatario], [estadoCivilLocatario], [profissaoLocatario], portador do RG nº [rgLocatario] e do CPF nº [cpfLocatario], residente e domiciliado à [enderecoLocatario];
+
+Têm entre si, justas e contratadas, a locação do imóvel abaixo descrito, que se regerá pelas cláusulas e condições seguintes:
+
+CLÁUSULA 1 - DO IMÓVEL
+O LOCADOR dá em locação ao LOCATÁRIO o imóvel de uso estritamente residencial, situado à [enderecoImovel], com as seguintes características: [caracteristicasImovel].
+
+CLÁUSULA 2 - DO PRAZO
+O prazo da locação é de [numeroMesesOuAnos] meses, iniciando-se em [dataInicio] e terminando em [dataTermino], independentemente de notificação ou aviso.
+
+CLÁUSULA 3 - DO VALOR DO ALUGUEL
+O aluguel mensal será de R$ [valor] ([valorPorExtenso]), vencendo todo dia [diaDoMes] de cada mês, a ser pago através de [metodoPagamento].
+
+CLÁUSULA 4 - DOS ENCARGOS MORATÓRIOS
+Em caso de atraso no pagamento do aluguel ou encargos, incidirá multa de [percentualMultaJuros]% sobre o valor devido, além de juros legais.
+
+CLÁUSULA 5 - DO REAJUSTE
+O aluguel será reajustado anualmente com base no índice [indiceCorrecao], ou outro que venha a substituí-lo.
+
+CLÁUSULA 6 - DA GARANTIA
+A locação é garantida por [tipoGarantia], no valor de R$ [valorGarantia], depositado em [dataDeposito].
+
+CLÁUSULA 7 - DA RESCISÃO ANTECIPADA
+Em caso de rescisão antecipada sem justa causa, a parte infratora deverá pagar multa proporcional ao tempo restante do contrato, correspondente a [mesesMultaRescisao] meses de aluguel.
+
+CLÁUSULA 8 - DO FORO
+Fica eleito o foro da cidade de [cidadeForo], para dirimir quaisquer dúvidas oriundas deste contrato, renunciando as partes a qualquer outro, por mais privilegiado que seja.
+
+E por estarem justos e contratados, firmam o presente contrato em [numeroViasContrato] vias de igual teor e forma, na presença de testemunhas.
+
+[ cidadeForo ], [dataAssinatura].
+
+LOCADOR: ___________________________
+[nomeLocador]
+
+LOCATÁRIO: _________________________
+[nomeLocatario]
+
+Testemunhas:
+
+Nome: _______________________ | Assinatura: _______________________
+
+Nome: _______________________ | Assinatura: _______________________
