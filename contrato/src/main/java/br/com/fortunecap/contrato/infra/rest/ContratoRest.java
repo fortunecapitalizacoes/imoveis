@@ -2,16 +2,14 @@ package br.com.fortunecap.contrato.infra.rest;
 
 import br.com.fortunecap.contrato.domain.ContratoDomain;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/contrato")
@@ -37,4 +35,24 @@ public class ContratoRest {
         }
     }
 
+    @GetMapping("/download/{fileId}")
+    public ResponseEntity<byte[]> downloadDocx(@PathVariable String fileId) {
+        Optional<InputStream> inputStreamOptional = contratoService.getContrato(fileId);
+
+        if (inputStreamOptional.isPresent()) {
+            try (InputStream inputStream = inputStreamOptional.get()) {
+                byte[] bytes = inputStream.readAllBytes();
+
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.wordprocessingml.document"));
+                headers.setContentDisposition(ContentDisposition.attachment().filename("arquivo.docx").build());
+
+                return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
+            } catch (IOException e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

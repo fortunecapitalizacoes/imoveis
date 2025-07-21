@@ -36,8 +36,6 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:1.18.26'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
 
-    // Dependência local do JAR que você adicionou na pasta libs
-   // implementation name: 'communs-0.0.1-SNAPSHOT', ext: 'jar'  // Substitua 'seu-arquivo' pelo nome do JAR
     implementation files('libs/communs-0.0.1-SNAPSHOT.jar')
 }
 

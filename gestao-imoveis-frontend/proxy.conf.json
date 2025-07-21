@@ -14,5 +14,13 @@
     "pathRewrite": {
       "^/cadastro/pessoa": ""
     }
+  },
+  "/contrato": {
+    "target": "http://localhost:8082",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/contrato": ""
+    }
   }
 }

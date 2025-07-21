@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -43,10 +44,10 @@ public class ContratoDomain {
             // Salva o arquivo e obtém o caminho
             String caminhoArquivo = fileStorageService.uploadFiles(file);
             
-            logger.info("Contrato salvo com sucesso no banco de dados e arquivo armazenado.");
+            logger.info("Contrato salvo com sucesso no banco de dados e arquivo armazenado." + conteudoContrato);
             
             
-            logger.info("Contrato cadastrado com ID: " + contratoId);
+            logger.info("Contrato cadastrado com ID: " + caminhoArquivo);
         } catch (Exception e) {
             logger.severe("Erro ao processar o arquivo Word: " + e.getMessage());
         }
@@ -60,5 +61,9 @@ public class ContratoDomain {
     public ContratoModel incluirModeloContrato(MultipartFile file, String fileName, String filetipo) throws IOException {
     	var idContrato = fileStorageService.uploadFiles(file);
     	return contratoRepository.save(ContratoModel.builder().contratoId(idContrato).nome(fileName).tipo(filetipo).id(UUID.randomUUID().toString()).build());
+    }
+
+    public Optional<InputStream> getContrato(String id){
+       return fileStorageService.getFile(id);
     }
 }

@@ -2,19 +2,24 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import * as mammoth from 'mammoth';
 import { QuillModule } from 'ngx-quill';
-
+import { HttpClientModule } from '@angular/common/http';
+import { ContratoService } from './contrato-service';
 @Component({
   selector: 'app-editar-contrato',
   standalone: true,
-  imports: [ReactiveFormsModule, QuillModule],
+  imports: [ReactiveFormsModule, QuillModule, HttpClientModule],
   templateUrl: './editar-contrato.component.html',
-  styleUrls: ['./editar-contrato.component.css']
+  styleUrls: ['./editar-contrato.component.css'],
+  providers: [ContratoService]
 })
 export class EditarContratoComponent {
   contratoForm: FormGroup;
-  emptyModules = { toolbar: false }; // Toolbar removida
+  emptyModules = { toolbar: false };
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private contratoService: ContratoService
+  ) {
     this.contratoForm = this.fb.group({
       editor: ['']
     });
@@ -33,7 +38,7 @@ export class EditarContratoComponent {
   }
 
   private convertDocxToHtml(arrayBuffer: ArrayBuffer) {
-    mammoth.convertToHtml({ arrayBuffer }, { styleMap: [] }) // sem filtro no estilo
+    mammoth.convertToHtml({ arrayBuffer }, { styleMap: [] })
       .then(result => {
         const htmlContent = result.value;
         this.contratoForm.patchValue({ editor: htmlContent });
@@ -41,7 +46,20 @@ export class EditarContratoComponent {
       .catch(err => console.error('Erro ao converter DOCX:', err));
   }
 
-  exportDocx() {
-    console.log('Salvar como DOCX ainda precisa ser implementado.');
+  salvartDocx() {
+    const htmlContent = this.contratoForm.get('editor')?.value;
+
+    this.contratoService.gerarDocx(htmlContent).subscribe({
+      next: (blob) => {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'contrato.docx';
+        link.click();
+        URL.revokeObjectURL(link.href);
+      },
+      error: (err) => {
+        console.error('Erro ao salvar DOCX:', err);
+      }
+    });
   }
 }
